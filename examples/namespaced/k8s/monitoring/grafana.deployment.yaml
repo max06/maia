@@ -1,0 +1,4 @@
+chart: grafana/grafana
+version: 8.5.0
+values:
+  adminUser: admin

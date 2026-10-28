@@ -1,0 +1,34 @@
+deploymentsDir: k8s   # call the directory whatever you like
+
+types:
+  cluster: {}          # no schema: any content is accepted
+
+  namespace:
+    schema:
+      type: object
+      properties:
+        labels:
+          type: object
+          additionalProperties: { type: string }
+
+  # Deployments are single files, not directories: shop/frontend.deployment.yaml
+  deployment:
+    match: ["*.deployment.yaml"]
+    scope: file   # siblings must not see each other's values
+    schema:
+      type: object
+      additionalProperties: false
+      required: [chart, version]
+      properties:
+        chart:   { type: string }
+        version: { type: string, pattern: "^\\d+\\.\\d+\\.\\d+$" }
+        ports:
+          type: array
+          items:
+            type: object
+            required: [name, port]
+            properties:
+              name: { type: string }
+              port: { type: integer }
+        values:
+          type: object   # free-form Helm values, not checked any further

@@ -1,0 +1,5 @@
+chart: cilium/cilium
+version: 1.16.3
+values:
+  cluster:
+    name: !ref ^cluster/clusterName

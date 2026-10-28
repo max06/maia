@@ -1,0 +1,36 @@
+deploymentsDir: deployments
+
+types:
+  group:
+    schema:
+      type: object
+      additionalProperties: false
+      required: [groupName, region]
+      properties:
+        groupName: { type: string }
+        region:    { enum: [eu, us, apac] }
+
+  cluster:
+    schema:
+      type: object
+      additionalProperties: false
+      required: [clusterName, environment]
+      properties:
+        clusterName:
+          type: string
+          pattern: "^[a-z]{3}-(dev|prod)$"   # e.g. fra-prod
+        environment: { enum: [dev, prod] }
+
+  application:
+    schema:
+      type: object
+      additionalProperties: false
+      required: [image]
+      properties:
+        image:    { type: string, minLength: 1 }
+        replicas: { $ref: "#/$defs/positiveInt" }
+        port:     { $ref: "#/$defs/port" }
+      # Reusable schema pieces, referenced with $ref above.
+      $defs:
+        positiveInt: { type: integer, minimum: 1 }
+        port:        { type: integer, minimum: 1, maximum: 65535 }

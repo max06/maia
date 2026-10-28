@@ -1,0 +1,3 @@
+image: ealen/echo-server
+replicas: 2
+port: 80

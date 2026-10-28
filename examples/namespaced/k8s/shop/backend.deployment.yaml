@@ -1,0 +1,7 @@
+chart: ./charts/backend
+version: 0.3.1
+ports:
+  - name: api
+    port: 9000
+  - name: metrics
+    port: 9090

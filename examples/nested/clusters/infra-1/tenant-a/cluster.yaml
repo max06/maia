@@ -1,0 +1,3 @@
+clusterName: tenant-a
+kind: virtual
+domain: tenant-a.example.com

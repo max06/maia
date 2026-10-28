@@ -1,0 +1,5 @@
+replicas: 1
+logLevel: info
+resources:
+  cpu: 100m
+  memory: 128Mi

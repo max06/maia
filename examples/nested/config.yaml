@@ -1,0 +1,39 @@
+deploymentsDir: clusters
+
+# Explicit wiring instead of implicit inheritance: clusters and images use
+# `scope: file`, so their values never flow into anything by themselves.
+# Applications pull exactly what they need with `!ref`.
+types:
+  # Strict: fixed set of keys, all checked.
+  cluster:
+    scope: file
+    schema:
+      type: object
+      additionalProperties: false
+      required: [clusterName, kind, domain]
+      properties:
+        clusterName: { type: string }
+        kind:        { enum: [host, virtual] }
+        domain:      { type: string, format: hostname }
+
+  # Strict: all three fields mandatory, nothing else allowed.
+  image:
+    scope: file
+    schema:
+      type: object
+      additionalProperties: false
+      required: [registry, repository, tag]
+      properties:
+        registry:   { type: string, minLength: 1 }
+        repository: { type: string, minLength: 1 }
+        tag:        { type: string, pattern: "^[0-9]+\\.[0-9]+\\.[0-9]+$" }
+
+  # Minimal: chart and version are required, `values` is free-form.
+  application:
+    schema:
+      type: object
+      required: [chart, version]
+      properties:
+        chart:   { type: string }
+        version: { type: string }
+        values:  { type: object }

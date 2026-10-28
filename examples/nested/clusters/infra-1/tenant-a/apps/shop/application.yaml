@@ -1,0 +1,12 @@
+chart: bitnami/nginx
+version: 18.2.4
+values:
+  clusterName: !ref ^cluster/clusterName            # my cluster: tenant-a
+  hostCluster: !ref ^cluster/^cluster/clusterName   # its parent: infra-1
+  ingress:
+    hostname: !ref ^cluster/domain
+  image: !ref ../image                              # the whole image.yaml
+  # Anything goes in here, the schema doesn't look inside `values`.
+  extraEnv:
+    - name: GREETING
+      value: hello

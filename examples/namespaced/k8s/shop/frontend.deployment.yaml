@@ -1,0 +1,7 @@
+chart: bitnami/nginx
+version: 18.2.4
+ports:
+  - name: http
+    port: 8080
+values:
+  replicaCount: 2

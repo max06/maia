@@ -1,0 +1,3 @@
+clusterName: infra-1
+kind: host
+domain: infra-1.example.com
